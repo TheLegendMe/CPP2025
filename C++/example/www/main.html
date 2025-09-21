@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>次元AI助手 - 二次元与AI的完美融合</title>
+  <!-- 引入外部资源 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <!-- 配置Tailwind -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#6C63FF',
+            secondary: '#FF6584',
+            accent: '#00F5D4',
+            dark: '#121826',
+            light: '#F8FAFC'
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            anime: ['"Comic Sans MS"', '"Bubblegum Sans"', 'cursive']
+          },
+          animation: {
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'glow': 'glow 2s ease-in-out infinite alternate',
+            'float-slow': 'float 8s ease-in-out infinite',
+            'float-fast': 'float 4s ease-in-out infinite'
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-15px)' }
+            },
+            glow: {
+              '0%': { boxShadow: '0 0 5px rgba(108, 99, 255, 0.5), 0 0 10px rgba(108, 99, 255, 0.3)' },
+              '100%': { boxShadow: '0 0 10px rgba(108, 99, 255, 0.8), 0 0 20px rgba(108, 99, 255, 0.5), 0 0 30px rgba(0, 245, 212, 0.5)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- 自定义工具类 -->
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .text-shadow {
+        text-shadow: 0 0 15px rgba(108, 99, 255, 0.8);
+      }
+      .text-shadow-accent {
+        text-shadow: 0 0 15px rgba(0, 245, 212, 0.8);
+      }
+      .bg-grid {
+        background-image: linear-gradient(rgba(108, 99, 255, 0.1) 1px, transparent 1px),
+                         linear-gradient(90deg, rgba(108, 99, 255, 0.1) 1px, transparent 1px);
+        background-size: 20px 20px;
+      }
+      .glass {
+        backdrop-filter: blur(10px);
+        background: rgba(18, 24, 38, 0.6);
+      }
+      .border-glow {
+        box-shadow: 0 0 8px rgba(108, 99, 255, 0.6),
+                    0 0 16px rgba(108, 99, 255, 0.4);
+      }
+      .hover-scale {
+        transition: transform 0.3s ease;
+      }
+      .hover-scale:hover {
+        transform: scale(1.03);
+      }
+    }
+  </style>
+  
+  <style>
+    /* 基础样式 */
+    body {
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+    
+    /* 滚动条样式 */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: rgba(18, 24, 38, 0.5);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: rgba(108, 99, 255, 0.6);
+      border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(108, 99, 255, 0.9);
+    }
+    
+    /* 粒子背景容器 */
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+    
+    /* 渐变背景动画 */
+    .gradient-bg {
+      background: linear-gradient(-45deg, #6C63FF, #00F5D4, #FF6584, #6C63FF);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+    }
+    
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
+</head>
+
+<body class="bg-dark text-light font-sans">
+  <!-- 粒子背景 -->
+  <div id="particles-js"></div>
+  
+  <!-- 导航栏 -->
+  <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="navbar">
+    <div class="glass border-b border-primary/30">
+      <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+        <!-- Logo -->
+        <div class="flex items-center space-x-2">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center animate-pulse-slow">
+            <i class="fa fa-robot text-dark text-xl"></i>
+          </div>
+          <h1 class="text-xl md:text-2xl font-anime font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">次元AI助手</h1>
+        </div>
+        
+        <!-- 导航链接 - 桌面版 -->
+        <nav class="hidden md:flex items-center space-x-8">
+          <a href="#chat" class="nav-link relative group py-2">
+            <span class="text-light hover:text-accent transition-colors">AI对话</span>
+            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a href="#disk" class="nav-link relative group py-2">
+            <span class="text-light hover:text-accent transition-colors">AI云盘</span>
+            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a href="#search" class="nav-link relative group py-2">
+            <span class="text-light hover:text-accent transition-colors">智能搜索</span>
+            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+          </a>
+        </nav>
+        
+        <!-- 用户区域 -->
+        <div class="flex items-center space-x-4">
+          <!-- 登录按钮 -->
+          <button id="loginBtn" class="hidden md:block px-4 py-2 rounded-full bg-primary/20 border border-primary/50 text-primary hover:bg-primary/30 transition-all">
+            <i class="fa fa-user-circle mr-2"></i>登录
+          </button>
+          
+          <!-- 移动端菜单按钮 -->
+          <button class="md:hidden text-2xl text-light hover:text-accent transition-colors" id="menuBtn">
+            <i class="fa fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 移动端菜单 -->
+    <div class="md:hidden glass hidden" id="mobileMenu">
+      <div class="container mx-auto px-4 py-3 flex flex-col space-y-4">
+        <a href="#chat" class="py-2 border-b border-primary/20 hover:text-accent transition-colors">
+          <i class="fa fa-comments mr-2"></i>AI对话
+        </a>
+        <a href="#disk" class="py-2 border-b border-primary/20 hover:text-accent transition-colors">
+          <i class="fa fa-cloud mr-2"></i>AI云盘
+        </a>
+        <a href="#search" class="py-2 hover:text-accent transition-colors">
+          <i class="fa fa-search mr-2"></i>智能搜索
+        </a>
+        <!-- 登录按钮 -->
+        <button id="mobileLoginBtn" class="w-full px-4 py-2 rounded-full bg-primary/20 border border-primary/50 text-primary hover:bg-primary/30 transition-all">
+          <i class="fa fa-user-circle mr-2"></i>登录
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 pt-24 pb-16 relative z-10">
+    <!-- 英雄区域 -->
+    <section class="py-12 md:py-24 flex flex-col md:flex-row items-center justify-between gap-8">
+      <div class="md:w-1/2 space-y-8">
+        <div class="inline-block px-4 py-1.5 bg-primary/20 rounded-full text-primary text-sm font-medium mb-4">
+          <i class="fa fa-star mr-1"></i> 全新体验上线
+        </div>
+        <h1 class="text-[clamp(2rem,5vw,4rem)] font-bold leading-tight">
+          <span class="block bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent text-shadow">二次元与</span>
+          <span class="block bg-clip-text text-transparent bg-gradient-to-r from-accent to-secondary text-shadow-accent">AI科技的完美融合</span>
+        </h1>
+        <p class="text-gray-300 text-lg max-w-lg leading-relaxed">
+          探索次元AI助手的强大功能，智能对话、云端存储与精准搜索，为您带来全新的数字体验。让AI成为您的二次元生活助手。
+        </p>
+        <div class="flex flex-wrap gap-4 pt-4">
+          <button class="px-6 py-3 rounded-full bg-gradient-to-r from-primary to-accent text-dark font-bold hover:opacity-90 transition-all transform hover:-translate-y-1 shadow-lg shadow-primary/30 hover-scale">
+            立即开始
+          </button>
+          <button class="px-6 py-3 rounded-full bg-transparent border border-primary text-primary hover:bg-primary/10 transition-all transform hover:-translate-y-1 hover-scale">
+            了解更多 <i class="fa fa-arrow-right ml-2"></i>
+          </button>
+        </div>
+        
+        <!-- 信任标志 -->
+        <div class="pt-4">
+          <p class="text-gray-400 text-sm mb-3">超过10万二次元爱好者的选择</p>
+          <div class="flex items-center space-x-6 opacity-70">
+            <div class="text-primary/70"><i class="fa fa-heart text-2xl"></i></div>
+            <div class="text-secondary/70"><i class="fa fa-star text-2xl"></i></div>
+            <div class="text-accent/70"><i class="fa fa-thumbs-up text-2xl"></i></div>
+            <div class="text-primary/70"><i class="fa fa-check-circle text-2xl"></i></div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="md:w-1/2 relative">
+        <!-- 二次元角色插图 -->
+        <div class="relative animate-float">
+          <img src="https://picsum.photos/seed/anime1/600/600" alt="二次元AI助手" class="rounded-2xl shadow-2xl shadow-primary/30 w-full max-w-md mx-auto hover-scale">
+          
+          <!-- 装饰元素 -->
+          <div class="absolute -top-5 -left-5 w-20 h-20 bg-secondary/30 rounded-full blur-xl animate-pulse"></div>
+          <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-primary/30 rounded-full blur-xl animate-pulse"></div>
+          
+          <!-- 悬浮功能图标 -->
+          <div class="absolute top-10 -right-5 md:right-0 bg-dark/80 backdrop-blur-sm p-3 rounded-lg border border-accent/50 shadow-lg transform rotate-3 animate-float-fast">
+            <i class="fa fa-comments text-accent text-xl"></i>
+          </div>
+          <div class="absolute -bottom-5 left-10 bg-dark/80 backdrop-blur-sm p-3 rounded-lg border border-primary/50 shadow-lg transform -rotate-6 animate-float-slow">
+            <i class="fa fa-cloud text-primary text-xl"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 功能卡片区域 -->
+    <section class="py-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- AI对话功能 -->
+      <div id="chat" class="bg-dark/50 rounded-2xl p-6 border border-primary/30 hover:border-primary/70 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-lg hover:shadow-primary/20 group hover-scale">
+        <div class="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center mb-6 group-hover:bg-primary/30 transition-all animate-glow">
+          <i class="fa fa-comments text-2xl text-primary"></i>
+        </div>
+        <h3 class="text-xl font-bold mb-3 text-white group-hover:text-accent transition-colors">AI对话</h3>
+        <p class="text-gray-400 mb-4">与二次元风格的AI助手进行自然对话，获取信息、创意灵感或日常陪伴。</p>
+        <ul class="space-y-2 mb-6">
+          <li class="flex items-center text-gray-300">
+            <i class="fa fa-check text-accent mr-2"></i>
+            上下文理解
+          </li>
+          <li class="flex items-center text-gray-300">
+            <i class="fa fa-check text-accent mr-2"></i>
+            多风格回应
+          </li>
+          <li class="flex items-center text-gray-300">
+            <i class="fa fa-check text-accent mr-2"></i>
+            知识问答
+          </li>
+        </ul>
+        <button class="w-full py-3 rounded-lg bg-primary/20 text-primary hover:bg-primary/30 transition-all">
+          开始对话 <i class="fa fa-arrow-right ml-1"></i>
+        </button>
+      </div>
+      
+      <!-- AI云盘功能 -->
+      <div id="disk" class="bg-dark/50 rounded-2xl p-6 border border-primary/30 hover:border-primary/70 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-lg hover:shadow-primary/20 group hover-scale">
+        <div class="w-14 h-14 rounded-xl bg-secondary/20 flex items-center justify-center mb-6 group-hover:bg-secondary/30 transition-all animate-glow">
+          <i class="fa fa-cloud text-2xl text-secondary"></i>
+        </div>
+        <h3 class="text-xl font-bold mb-3 text-white group-hover:text-accent transition-colors">AI云盘</h3>
+        <p class="text-gray-400 mb-4">智能管理您的文件，AI自动分类与标签，支持二次元资源专属优化。</p>
+        <ul class="space-y-2 mb-6">
+          <li class="flex items-center text-gray-300">
+            <i class="fa fa-check text-accent mr-2"></i>
+            智能分类
+          </li>
+          <li class="flex items-center text-gray-300">
+            <i class="fa fa-check text-accent mr-2"></i>
+            内容识别
+          </li>
+          <li class="flex items-center text-gray-300">
+            <i class="fa fa-check text-accent mr-2"></i>
+            快速访问
+          </li>
+        </ul>
+        <button class="w-full py-3 rounded-lg bg-secondary/20 text-secondary hover:bg-secondary/30 transition-all">
+          打开云盘 <i class="fa fa-arrow-right ml-1"></i>
+        </button>
+      </div>
+      
+      <!-- 智能搜索功能 -->
+      <div id="search" class="bg-dark/50 rounded-2xl p-6 border border-primary/30 hover:border-primary/70 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-lg hover:shadow-primary/20 group hover-scale">
+        <div class="w-14 h-14 rounded-xl bg-accent/20 flex items-center justify-center mb-6 group-hover:bg-accent/30 transition-all animate-glow">
+          <i class="fa fa-search text-2xl text-accent"></i>
+        </div>
+        <h3 class="text-xl font-bold mb-3 text-white group-hover:text-accent transition-colors">智能搜索</h3>
+        <p class="text-gray-400 mb-4">语义理解搜索，精准找到您需要的内容，支持跨次元资源检索。</p>
+        <ul class="space-y-2 mb-6">
+          <li class="flex items-center text-gray-300">
+            <i class="fa fa-check text-accent mr-2"></i>
+            语义理解
+          </li>
+          <li class="flex items-center text-gray-300">
+            <i class="fa fa-check text-accent mr-2"></i>
+            多源搜索
+          </li>
+          <li class="flex items-center text-gray-300">
+            <i class="fa fa-check text-accent mr-2"></i>
+            智能推荐
+          </li>
+        </ul>
+        <button class="w-full py-3 rounded-lg bg-accent/20 text-accent hover:bg-accent/30 transition-all">
+          开始搜索 <i class="fa fa-arrow-right ml-1"></i>
+        </button>
+      </div>
+    </section>
+    
+    <!-- AI对话界面示例 -->
+    <section class="py-16">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">AI对话界面</h2>
+        <p class="text-gray-400 max-w-2xl mx-auto">与二次元风格的AI助手进行流畅自然的对话体验</p>
+      </div>
+      
+      <div class="max-w-3xl mx-auto bg-dark/70 rounded-2xl border border-primary/40 overflow-hidden shadow-xl hover-scale">
+        <!-- 对话头部 -->
+        <div class="p-4 bg-gradient-to-r from-primary/20 to-accent/20 border-b border-primary/30 flex items-center">
+          <img src="https://picsum.photos/seed/aiavatar/60/60" alt="AI助手" class="w-10 h-10 rounded-full mr-3">
+          <div>
+            <h3 class="font-bold">次元助手</h3>
+            <p class="text-xs text-gray-400">正在输入中...</p>
+          </div>
+          <div class="ml-auto flex space-x-3">
+            <button class="text-gray-400 hover:text-light transition-colors">
+              <i class="fa fa-phone"></i>
+            </button>
+            <button class="text-gray-400 hover:text-light transition-colors">
+              <i class="fa fa-video-camera"></i>
+            </button>
+            <button class="text-gray-400 hover:text-light transition-colors">
+              <i class="fa fa-info-circle"></i>
+            </button>
+          </div>
+        </div>
+        
+        <!-- 对话内容区 -->
+        <div class="p-4 h-96 overflow-y-auto bg-grid">
+          <!-- 用户消息 -->
+          <div class="flex justify-end mb-4">
+            <div class="max-w-[70%] bg-primary/20 rounded-t-xl rounded-bl-xl p-3 border border-primary/40">
+              <p>你好！能帮我推荐一些好看的二次元作品吗？</p>
+              <p class="text-xs text-right text-gray-400 mt-1">10:23</p>
+            </div>
+          </div>
+          
+          <!-- AI消息 -->
+          <div class="flex mb-4">
+            <img src="https://picsum.photos/seed/aiavatar/40/40" alt="AI助手" class="w-8 h-8 rounded-full mr-2 mt-1">
+            <div class="max-w-[70%] bg-dark/60 rounded-t-xl rounded-br-xl p-3 border border-accent/30">
+              <p>当然可以！根据你的喜好，我推荐以下几部作品：</p>
+              <ul class="list-disc list-inside ml-2 mt-1 space-y-1">
+                <li>《攻壳机动队》- 经典科幻动画</li>
+                <li>《赛博朋克：边缘行者》- 未来科技风格</li>
+                <li>《灵能百分百》- 超能力题材</li>
+              </ul>
+              <p class="text-xs text-right text-gray-400 mt-1">10:24</p>
+            </div>
+          </div>
+          
+          <!-- 用户消息 -->
+          <div class="flex justify-end mb-4">
+            <div class="max-w-[70%] bg-primary/20 rounded-t-xl rounded-bl-xl p-3 border border-primary/40">
+              <p>这些作品我都看过了，有没有更近期的推荐？</p>
+              <p class="text-xs text-right text-gray-400 mt-1">10:25</p>
+            </div>
+          </div>
+          
+          <!-- AI消息 -->
+          <div class="flex mb-4">
+            <img src="https://picsum.photos/seed/aiavatar/40/40" alt="AI助手" class="w-8 h-8 rounded-full mr-2 mt-1">
+            <div class="max-w-[70%] bg-dark/60 rounded-t-xl rounded-br-xl p-3 border border-accent/30">
+              <p>最近的新番中，这几部值得一看：</p>
+              <ul class="list-disc list-inside ml-2 mt-1 space-y-1">
+                <li>《链锯人》- 黑暗奇幻风格</li>
+                <li>《孤独摇滚！》- 音乐题材喜剧</li>
+                <li>《跃动青春》- 校园治愈系</li>
+              </ul>
+              <p>需要我详细介绍其中某一部吗？</p>
+              <p class="text-xs text-right text-gray-400 mt-1">10:26</p>
+            </div>
+          </div>
+          
+          <!-- 正在输入指示器 -->
+          <div class="flex mb-4">
+            <img src="https://picsum.photos/seed/aiavatar/40/40" alt="AI助手" class="w-8 h-8 rounded-full mr-2 mt-1">
+            <div class="bg-dark/60 rounded-t-xl rounded-br-xl p-3 border border-accent/30">
+              <div class="flex space-x-1">
+                <div class="w-2 h-2 bg-accent rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                <div class="w-2 h-2 bg-accent rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                <div class="w-2 h-2 bg-accent rounded-full animate-bounce"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 输入区域 -->
+        <div class="p-4 border-t border-primary/30">
+          <div class="flex items-center">
+            <button class="text-gray-400 hover:text-accent p-2 transition-colors">
+              <i class="fa fa-smile-o text-xl"></i>
+            </button>
+            <button class="text-gray-400 hover:text-accent p-2 transition-colors">
+              <i class="fa fa-paperclip text-xl"></i>
+            </button>
+            <input type="text" placeholder="输入消息..." class="flex-1 mx-2 bg-dark/50 border border-primary/50 rounded-full px-4 py-2 focus:outline-none focus:border-accent transition-colors">
+            <button class="w-10 h-10 rounded-full bg-gradient-to-r from-primary to-accent flex items-center justify-center text-dark hover:opacity-90 transition-all">
+              <i class="fa fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 功能展示区 - 云盘与搜索 -->
+    <section class="py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      <div class="order-2 md:order-1">
+        <div class="inline-block px-4 py-1.5 bg-secondary/20 rounded-full text-secondary text-sm font-medium mb-4">
+          <i class="fa fa-database mr-1"></i> 智能管理
+        </div>
+        <h2 class="text-3xl md:text-4xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-secondary to-accent">AI云盘与智能搜索</h2>
+        <p class="text-gray-300 mb-6 leading-relaxed">
+          智能管理您的二次元资源，自动分类整理，AI识别内容并生成标签，让您的收藏井井有条。强大的语义搜索功能，轻松找到您需要的任何内容。
+        </p>
+        
+        <div class="space-y-5">
+          <div class="flex items-start hover:translate-x-1 transition-transform">
+            <div class="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center mt-1 mr-4 flex-shrink-0">
+              <i class="fa fa-folder-open text-accent"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-lg mb-1">智能分类</h3>
+              <p class="text-gray-400">自动识别图片、视频和文档内容，按类型和主题智能分类</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start hover:translate-x-1 transition-transform">
+            <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center mt-1 mr-4 flex-shrink-0">
+              <i class="fa fa-tags text-primary"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-lg mb-1">AI标签生成</h3>
+              <p class="text-gray-400">自动识别内容主题和角色，生成精准标签，便于检索</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start hover:translate-x-1 transition-transform">
+            <div class="w-10 h-10 rounded-full bg-secondary/20 flex items-center justify-center mt-1 mr-4 flex-shrink-0">
+              <i class="fa fa-bolt text-secondary"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-lg mb-1">快速搜索</h3>
+              <p class="text-gray-400">语义理解搜索，即使描述模糊也能找到您需要的内容</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="order-1 md:order-2 relative">
+        <div class="bg-dark/70 rounded-2xl border border-primary/40 overflow-hidden shadow-xl hover-scale">
+          <!-- 云盘界面 -->
+          <div class="p-4 bg-gradient-to-r from-primary/20 to-accent/20 border-b border-primary/30 flex items-center justify-between">
+            <h3 class="font-bold">我的次元资源库</h3>
+            <div class="flex space-x-2">
+              <button class="p-1.5 rounded hover:bg-white/10 transition-colors">
+                <i class="fa fa-th-large"></i>
+              </button>
+              <button class="p-1.5 rounded hover:bg-white/10 transition-colors">
+                <i class="fa fa-list"></i>
+              </button>
+              <button class="p-1.5 rounded hover:bg-white/10 transition-colors">
+                <i class="fa fa-sort"></i>
+              </button>
+            </div>
+          </div>
+          
+          <!-- 搜索栏 -->
+          <div class="p-4 border-b border-primary/30">
+            <div class="relative">
+              <i class="fa fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+              <input type="text" placeholder="搜索文件或标签..." class="w-full bg-dark/50 border border-primary/50 rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:border-accent transition-colors">
+            </div>
+          </div>
+          
+          <!-- 云盘内容 -->
+          <div class="p-4">
+            <div class="grid grid-cols-3 gap-3">
+              <!-- 文件夹 -->
+              <div class="bg-dark/60 rounded-lg p-3 border border-primary/20 hover:border-primary/50 transition-all text-center">
+                <div class="w-12 h-12 mx-auto bg-primary/20 rounded flex items-center justify-center mb-2">
+                  <i class="fa fa-folder text-primary text-xl"></i>
+                </div>
+                <p class="text-sm truncate">动漫截图</p>
+              </div>
+              
+              <!-- 图片文件 -->
+              <div class="bg-dark/60 rounded-lg p-3 border border-primary/20 hover:border-primary/50 transition-all text-center">
+                <img src="https://picsum.photos/seed/anime2/100/100" alt="动漫图片" class="w-12 h-12 mx-auto rounded mb-2 object-cover">
+                <p class="text-sm truncate">角色插画.jpg</p>
+              </div>
+              
+              <!-- 视频文件 -->
+              <div class="bg-dark/60 rounded-lg p-3 border border-primary/20 hover:border-primary/50 transition-all text-center">
+                <div class="w-12 h-12 mx-auto bg-secondary/20 rounded flex items-center justify-center mb-2">
+                  <i class="fa fa-film text-secondary text-xl"></i>
+                </div>
+                <p class="text-sm truncate">精彩片段.mp4</p>
+              </div>
+              
+              <!-- 文档文件 -->
+              <div class="bg-dark/60 rounded-lg p-3 border border-primary/20 hover:border-primary/50 transition-all text-center">
+                <div class="w-12 h-12 mx-auto bg-accent/20 rounded flex items-center justify-center mb-2">
+                  <i class="fa fa-file-text text-accent text-xl"></i>
+                </div>
+                <p class="text-sm truncate">台词剧本.txt</p>
+              </div>
+              
+              <!-- 图片文件 -->
+              <div class="bg-dark/60 rounded-lg p-3 border border-primary/20 hover:border-primary/50 transition-all text-center">
+                <img src="https://picsum.photos/seed/anime3/100/100" alt="动漫图片" class="w-12 h-12 mx-auto rounded mb-2 object-cover">
+                <p class="text-sm truncate">场景设定.jpg</p>
+              </div>
+              
+              <!-- 音乐文件 -->
+              <div class="bg-dark/60 rounded-lg p-3 border border-primary/20 hover:border-primary/50 transition-all text-center">
+                <div class="w-12 h-12 mx-auto bg-primary/20 rounded flex items-center justify-center mb-2">
+                  <i class="fa fa-music text-primary text-xl"></i>
+                </div>
+                <p class="text-sm truncate">主题曲.mp3</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 装饰元素 -->
+        <div class="absolute -z-10 -top-10 -right-10 w-40 h-40 bg-secondary/20 rounded-full blur-2xl animate-pulse"></div>
+        <div class="absolute -z-10 -bottom-5 -left-5 w-32 h-32 bg-primary/20 rounded-full blur-2xl animate-pulse"></div>
+      </div>
+    </section>
+    
+    <!-- 搜索功能展示 -->
+    <section class="py-16">
+      <div class="text-center mb-12">
+        <div class="inline-block px-4 py-1.5 bg-accent/20 rounded-full text-accent text-sm font-medium mb-4">
+          <i class="fa fa-search mr-1"></i> 精准搜索
+        </div>
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">智能搜索体验</h2>
+        <p class="text-gray-400 max-w-2xl mx-auto">强大的AI语义理解，轻松找到您需要的二次元资源</p>
+      </div>
+      
+      <div class="max-w-3xl mx-auto">
+        <!-- 搜索框 -->
+        <div class="relative mb-8 hover-scale">
+          <div class="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-full blur-lg opacity-30"></div>
+          <div class="relative bg-dark/80 border border-primary/50 rounded-full p-1.5 flex">
+            <input type="text" placeholder="搜索动漫角色、场景或剧情描述..." class="flex-1 bg-transparent px-6 py-4 focus:outline-none text-lg">
+            <button class="bg-gradient-to-r from-primary to-secondary text-dark px-6 py-4 rounded-full font-bold hover:opacity-90 transition-all">
+              <i class="fa fa-search mr-2"></i> 搜索
+            </button>
+          </div>
+        </div>
+        
+        <!-- 搜索建议 -->
+        <div class="bg-dark/70 rounded-xl border border-primary/40 p-4 mb-8 hover-scale">
+          <h3 class="font-bold mb-3 text-gray-300">热门搜索</h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm hover:bg-primary/30 transition-colors cursor-pointer"># 赛博朋克</span>
+            <span class="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm hover:bg-primary/30 transition-colors cursor-pointer"># 魔法少女</span>
+            <span class="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm hover:bg-primary/30 transition-colors cursor-pointer"># 机甲</span>
+            <span class="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm hover:bg-primary/30 transition-colors cursor-pointer"># 校园</span>
+            <span class="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm hover:bg-primary/30 transition-colors cursor-pointer"># 异世界</span>
+            <span class="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm hover:bg-primary/30 transition-colors cursor-pointer"># 治愈系</span>
+          </div>
+        </div>
+        
+        <!-- 搜索结果示例 -->
+        <div class="bg-dark/70 rounded-xl border border-primary/40 overflow-hidden hover-scale">
+          <div class="p-4 bg-gradient-to-r from-primary/20 to-accent/20 border-b border-primary/30">
+            <h3 class="font-bold">搜索结果: "未来科技感的动漫角色"</h3>
+          </div>
+          
+          <div class="divide-y divide-primary/20">
+            <!-- 结果项1 -->
+            <div class="p-4 hover:bg-primary/10 transition-colors">
+              <div class="flex gap-4">
+                <img src="https://picsum.photos/seed/anime4/120/160" alt="动漫角色" class="w-24 h-32 rounded-lg object-cover flex-shrink-0">
+                <div class="flex-1">
+                  <h4 class="font-bold text-lg mb-1">草薙素子 - 《攻壳机动队》</h4>
+                  <p class="text-gray-400 text-sm mb-2">全身义体化的公安9课队长，具有高度的战斗能力和黑客技术</p>
+                  <div class="flex flex-wrap gap-1">
+                    <span class="px-2 py-0.5 bg-primary/20 text-primary rounded text-xs"># 赛博格</span>
+                    <span class="px-2 py-0.5 bg-primary/20 text-primary rounded text-xs"># 公安</span>
+                    <span class="px-2 py-0.5 bg-primary/20 text-primary rounded text-xs"># 未来</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 结果项2 -->
+            <div class="p-4 hover:bg-primary/10 transition-colors">
+              <div class="flex gap-4">
+                <img src="https://picsum.photos/seed/anime5/120/160" alt="动漫角色" class="w-24 h-32 rounded-lg object-cover flex-shrink-0">
+                <div class="flex-1">
+                  <h4 class="font-bold text-lg mb-1">大卫·马丁内斯 - 《赛博朋克：边缘行者》</h4>
+                  <p class="text-gray-400 text-sm mb-2">来自夜之城的少年，通过改造获得了强大的战斗力</p>
+                  <div class="flex flex-wrap gap-1">
+                    <span class="px-2 py-0.5 bg-primary/20 text-primary rounded text-xs"># 赛博朋克</span>
+                    <span class="px-2 py-0.5 bg-primary/20 text-primary rounded text-xs"># 改造人</span>
+                    <span class="px-2 py-0.5 bg-primary/20 text-primary rounded text-xs"># 战斗</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 结果项3 -->
+            <div class="p-4 hover:bg-primary/10 transition-colors">
+              <div class="flex gap-4">
+                <img src="https://picsum.photos/seed/anime6/120/160" alt="动漫角色" class="w-24 h-32 rounded-lg object-cover flex-shrink-0">
+                <div class="flex-1">
+                  <h4 class="font-bold text-lg mb-1">阿丽塔 - 《铳梦》</h4>
+                  <p class="text-gray-400 text-sm mb-2">拥有强大战斗力的机械少女，寻找自己的过去</p>
+                  <div class="flex flex-wrap gap-1">
+                    <span class="px-2 py-0.5 bg-primary/20 text-primary rounded text-xs"># 机械少女</span>
+                    <span class="px-2 py-0.5 bg-primary/20 text-primary rounded text-xs"># 格斗</span>
+                    <span class="px-2 py-0.5 bg-primary/20 text-primary rounded text-xs"># 末世</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 加载更多 -->
+          <div class="p-4 text-center">
+            <button class="px-6 py-2 rounded-lg bg-primary/20 text-primary hover:bg-primary/30 transition-all">
+              加载更多结果 <i class="fa fa-refresh ml-2"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 用户评价轮播 -->
+    <section class="py-16 bg-dark/30 rounded-3xl px-6">
+      <div class="text-center mb-12">
+        <div class="inline-block px-4 py-1.5 bg-primary/20 rounded-full text-primary text-sm font-medium mb-4">
+          <i class="fa fa-comments mr-1"></i> 用户评价
+        </div>
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-accent to-primary">用户怎么说</h2>
+        <p class="text-gray-400 max-w-2xl mx-auto">来自二次元爱好者的真实体验分享</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- 评价1 -->
+        <div class="bg-dark/70 rounded-xl p-6 border border-primary/30 hover:border-primary/50 transition-all hover-scale">
+          <div class="flex items-center space-x-1 text-yellow-400 mb-4">
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+          </div>
+          <p class="text-gray-300 mb-6 italic">"AI对话功能太赞了！助手不仅能理解我提到的动漫梗，还能给出非常贴合二次元风格的回答，就像在和同好交流一样。"</p>
+          <div class="flex items-center">
+            <img src="https://picsum.photos/seed/user1/60/60" alt="用户头像" class="w-10 h-10 rounded-full mr-3">
+            <div>
+              <h4 class="font-bold">动漫爱好者</h4>
+              <p class="text-xs text-gray-400">使用3个月</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 评价2 -->
+        <div class="bg-dark/70 rounded-xl p-6 border border-primary/30 hover:border-primary/50 transition-all hover-scale">
+          <div class="flex items-center space-x-1 text-yellow-400 mb-4">
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+          </div>
+          <p class="text-gray-300 mb-6 italic">"云盘功能帮我整理了几千张动漫图片，自动分类和标签功能太实用了！现在找图再也不用翻遍文件夹了，强烈推荐给收藏党！"</p>
+          <div class="flex items-center">
+            <img src="https://picsum.photos/seed/user2/60/60" alt="用户头像" class="w-10 h-10 rounded-full mr-3">
+            <div>
+              <h4 class="font-bold">图片收藏家</h4>
+              <p class="text-xs text-gray-400">使用6个月</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 评价3 -->
+        <div class="bg-dark/70 rounded-xl p-6 border border-primary/30 hover:border-primary/50 transition-all hover-scale">
+          <div class="flex items-center space-x-1 text-yellow-400 mb-4">
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star-half-o"></i>
+          </div>
+          <p class="text-gray-300 mb-6 italic">"智能搜索简直是神器！我只描述了一个模糊的场景，它居然能帮我找到那部我想了很久但记不起名字的动漫，太厉害了！"</p>
+          <div class="flex items-center">
+            <img src="https://picsum.photos/seed/user3/60/60" alt="用户头像" class="w-10 h-10 rounded-full mr-3">
+            <div>
+              <h4 class="font-bold">资深漫迷</h4>
+              <p class="text-xs text-gray-400">使用1年</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 注册/开始使用区域 -->
+    <section class="py-16 relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-3xl"></div>
+      <div class="absolute -z-10 top-0 left-0 w-full h-full bg-grid opacity-30"></div>
+      
+      <div class="relative z-10 max-w-4xl mx-auto text-center">
+        <h2 class="text-3xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent text-shadow">
+          开始您的次元AI之旅
+        </h2>
+        <p class="text-gray-300 text-lg mb-10 max-w-2xl mx-auto">
+          加入我们，体验二次元与AI科技的完美结合，让智能助手为您的数字生活带来更多乐趣与便利。
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <button class="px-8 py-4 rounded-full bg-gradient-to-r from-primary to-accent text-dark font-bold text-lg hover:opacity-90 transition-all transform hover:-translate-y-1 shadow-lg shadow-primary/30 hover-scale">
+            免费注册
+          </button>
+          <button class="px-8 py-4 rounded-full bg-transparent border-2 border-primary text-primary font-bold text-lg hover:bg-primary/10 transition-all transform hover:-translate-y-1 hover-scale">
+            了解会员权益
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <!-- 页脚 -->
+  <footer class="bg-dark/80 border-t border-primary/30 py-12 relative z-10">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <div class="flex items-center space-x-2 mb-4">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+              <i class="fa fa-robot text-dark"></i>
+            </div>
+            <h2 class="text-xl font-anime font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">次元AI助手</h2>
+          </div>
+          <p class="text-gray-400 text-sm mb-4">
+            二次元与AI科技的完美融合，为您提供智能对话、云盘和搜索服务。
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+              <i class="fa fa-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+              <i class="fa fa-facebook"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+              <i class="fa fa-instagram"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+              <i class="fa fa-youtube-play"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="font-bold text-lg mb-4">功能</h3>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="#chat" class="hover:text-primary transition-colors">AI对话</a></li>
+            <li><a href="#disk" class="hover:text-primary transition-colors">AI云盘</a></li>
+            <li><a href="#search" class="hover:text-primary transition-colors">智能搜索</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">会员服务</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="font-bold text-lg mb-4">支持</h3>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="#" class="hover:text-primary transition-colors">帮助中心</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">使用教程</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">常见问题</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">联系我们</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="font-bold text-lg mb-4">法律</h3>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="#" class="hover:text-primary transition-colors">隐私政策</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">服务条款</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">版权声明</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Cookie政策</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-primary/20 pt-8 text-center text-gray-500 text-sm">
+        <p>© 2023 次元AI助手. 保留所有权利.</p>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- 粒子背景库 -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  
+  <script>
+    // 粒子背景配置
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 80, density: { enable: true, value_area: 800 } },
+        color: { value: "#6C63FF" },
+        shape: { type: "circle" },
+        opacity: { 
+          value: 0.5, 
+          random: true, 
+          anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false } 
+        },
+        size: { 
+          value: 3, 
+          random: true, 
+          anim: { enable: true, speed: 2, size_min: 0.1, sync: false } 
+        },
+        line_linked: {
+          enable: true,
+          distance: 150,
+          color: "#6C63FF",
+          opacity: 0.2,
+          width: 1
+        },
+        move: {
+          enable: true,
+          speed: 1,
+          direction: "none",
+          random: true,
+          straight: false,
+          out_mode: "out",
+          bounce: false
+        }
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: {
+          onhover: { enable: true, mode: "grab" },
+          onclick: { enable: true, mode: "push" },
+          resize: true
+        },
+        modes: {
+          grab: { distance: 140, line_linked: { opacity: 0.5 } },
+          push: { particles_nb: 3 }
+        }
+      },
+      retina_detect: true
+    });
+    
+    // 导航栏滚动效果
+    window.addEventListener('scroll', function() {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('bg-dark/90', 'backdrop-blur-md', 'shadow-lg');
+      } else {
+        navbar.classList.remove('bg-dark/90', 'backdrop-blur-md', 'shadow-lg');
+      }
+    });
+    
+    // 移动端菜单切换
+    document.getElementById('menuBtn').addEventListener('click', function() {
+      const mobileMenu = document.getElementById('mobileMenu');
+      mobileMenu.classList.toggle('hidden');
+    });
+    
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+          
+          // 关闭移动菜单（如果打开）
+          document.getElementById('mobileMenu').classList.add('hidden');
+        }
+      });
+    });
+    
+    // 动态加载更多功能
+    function loadMoreResults() {
+      // 这里可以添加AJAX加载更多结果的逻辑
+      console.log('加载更多结果...');
+    }
+    
+    // 添加页面加载动画
+    window.addEventListener('load', function() {
+      document.body.classList.add('loaded');
+    });
+    
+    // 登录模态框功能
+    document.addEventListener('DOMContentLoaded', function() {
+      const loginBtn = document.getElementById('loginBtn');
+      const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+      const loginModal = document.getElementById('loginModal');
+      const closeModal = document.getElementById('closeModal');
+      const loginForm = document.getElementById('loginForm');
+      const errorMessage = document.getElementById('errorMessage');
+      
+      // 打开模态框
+      function openModal() {
+        loginModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+      
+      // 关闭模态框
+      function closeModalFunc() {
+        loginModal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+        errorMessage.textContent = '';
+      }
+      
+      // 点击登录按钮打开模态框
+      if (loginBtn) {
+        loginBtn.addEventListener('click', openModal);
+      }
+      
+      if (mobileLoginBtn) {
+        mobileLoginBtn.addEventListener('click', openModal);
+      }
+      
+      // 点击关闭按钮关闭模态框
+      if (closeModal) {
+        closeModal.addEventListener('click', closeModalFunc);
+      }
+      
+      // 点击模态框外部关闭模态框
+      if (loginModal) {
+        loginModal.addEventListener('click', function(event) {
+          if (event.target === loginModal) {
+            closeModalFunc();
+          }
+        });
+      }
+      
+      // 处理登录表单提交
+      if (loginForm) {
+        loginForm.addEventListener('submit', function(event) {
+          event.preventDefault();
+          
+          const username = document.getElementById('username').value;
+          const password = document.getElementById('password').value;
+          
+          // 创建URL编码的表单数据
+          const formData = new URLSearchParams();
+          formData.append('username', username);
+          formData.append('password', password);
+          
+          // 发送登录请求
+          fetch('/login/doLogin', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: formData
+          })
+          .then(response => {
+            if (response.ok) {
+              return response.text();
+            } else {
+              throw new Error('登录失败');
+            }
+          })
+          .then(data => {
+            // 登录成功，显示服务器返回的HTML内容
+            document.open();
+            document.write(data);
+            document.close();
+          })
+          .catch(error => {
+            // 显示错误信息
+            if (errorMessage) {
+              errorMessage.style.display = 'block';
+              const errorText = document.getElementById('errorText');
+              if (errorText) {
+                errorText.textContent = '用户名或密码错误，请重试';
+              }
+            }
+            console.error('登录错误:', error);
+          });
+        });
+      }
+    });
+  </script>
+    
+    <!-- 登录模态框 -->
+    <div id="loginModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-dark/80 backdrop-blur-sm">
+      <div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10"></div>
+      
+      <!-- 模态框内容 -->
+      <div class="relative w-full max-w-md glass border border-primary/50 rounded-2xl p-8 shadow-2xl shadow-primary/20 animate-float">
+        <!-- 关闭按钮 -->
+        <button id="closeModal" class="absolute top-4 right-4 text-gray-400 hover:text-light transition-colors">
+          <i class="fa fa-times text-xl"></i>
+        </button>
+        
+        <!-- 登录表单标题 -->
+        <div class="text-center mb-8">
+          <div class="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center mb-4">
+            <i class="fa fa-robot text-dark text-2xl"></i>
+          </div>
+          <h2 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">登录账号</h2>
+          <p class="text-gray-400 mt-2">欢迎回到次元AI助手</p>
+        </div>
+        
+        <!-- 错误信息显示 -->
+        <div class="mb-6" id="errorMessage" style="display: none;">
+          <p class="text-secondary text-center py-2 px-4 rounded-lg bg-secondary/10 border border-secondary/30">
+            <i class="fa fa-exclamation-circle mr-2"></i><span id="errorText"></span>
+          </p>
+        </div>
+        
+        <!-- 登录表单 -->
+        <form id="loginForm" class="space-y-6">
+          <div>
+            <label for="username" class="block text-sm font-medium text-gray-300 mb-1">
+              <i class="fa fa-user-circle mr-1"></i>用户名
+            </label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <i class="fa fa-user text-gray-400"></i>
+              </div>
+              <input type="text" id="username" name="username"
+                     class="block w-full pl-10 pr-3 py-3 bg-dark/50 border border-primary/30 rounded-lg 
+                            focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent
+                            transition-all text-light"
+                     placeholder="请输入用户名" required>
+            </div>
+          </div>
+          
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-300 mb-1">
+              <i class="fa fa-lock mr-1"></i>密码
+            </label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <i class="fa fa-lock text-gray-400"></i>
+              </div>
+              <input type="password" id="password" name="password"
+                     class="block w-full pl-10 pr-3 py-3 bg-dark/50 border border-primary/30 rounded-lg 
+                            focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent
+                            transition-all text-light"
+                     placeholder="请输入密码" required>
+            </div>
+          </div>
+          
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <input id="remember-me" name="remember-me" type="checkbox"
+                     class="h-4 w-4 text-primary focus:ring-primary border-gray-600 rounded">
+              <label for="remember-me" class="ml-2 block text-sm text-gray-400">
+                记住我
+              </label>
+            </div>
+            <a href="#" class="text-sm text-primary hover:text-accent transition-colors">
+              忘记密码?
+            </a>
+          </div>
+          
+          <div>
+            <button type="submit"
+                    class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg 
+                           shadow-sm text-sm font-medium text-dark bg-gradient-to-r from-primary to-accent
+                           hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 
+                           focus:ring-primary transition-all transform hover:-translate-y-0.5">
+              <i class="fa fa-sign-in mr-2"></i>登录
+            </button>
+          </div>
+        </form>
+        
+        <div class="mt-8 text-center">
+          <p class="text-gray-400 text-sm">
+            还没有账号? <a href="#" class="text-primary hover:text-accent transition-colors">立即注册</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
