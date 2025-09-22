@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI 云盘</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+  <h2>AI 云盘 - 基本上传</h2>
+  <input id="file" type="file" />
+  <button onclick="simpleUpload()">直接上传</button>
+
+  <h3>分块上传</h3>
+  <input id="cfile" type="file" />
+  <button onclick="chunkedUpload()">分块上传</button>
+
+  <script>
+  async function simpleUpload() {
+    const f = document.getElementById('file').files[0];
+    if (!f) return alert('请选择文件');
+    const res = await fetch('/cloud/upload', {
+      method: 'POST',
+      headers: { 'X-Filename': encodeURIComponent(f.name) },
+      body: f
+    });
+    alert(await res.text());
+  }
+
+  async function chunkedUpload() {
+    const f = document.getElementById('cfile').files[0];
+    if (!f) return alert('请选择文件');
+    const uploadId = Date.now() + '_' + f.name;
+    await fetch('/cloud/chunk/init', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: `uploadId=${encodeURIComponent(uploadId)}&name=${encodeURIComponent(f.name)}`});
+    const size = 2 * 1024 * 1024;
+    let idx = 0;
+    for (let offset = 0; offset < f.size; offset += size, idx++) {
+      const blob = f.slice(offset, Math.min(offset + size, f.size));
+      await fetch('/cloud/chunk/upload', {
+        method: 'POST',
+        headers: { 'X-UploadId': uploadId, 'X-Chunk-Index': String(idx) },
+        body: blob
+      });
+    }
+    await fetch('/cloud/chunk/complete', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: `uploadId=${encodeURIComponent(uploadId)}&name=${encodeURIComponent(f.name)}`});
+    alert('完成');
+  }
+  </script>
+</body>
+</html>
+
+
